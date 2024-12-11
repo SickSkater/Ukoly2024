@@ -55,7 +55,7 @@ def nasobeni_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[l
 def transpozice_matice(matice: list[list[int]]) -> list[list[int]]:
     """Provede transpozici matice."""
     matice: list[list[int]] = []
-    if not matice or not matice[0] # check pro existenci matice, check na existenci řádků
+    if not matice or not matice[0]: # check pro existenci matice, check na existenci řádků
         return [[]] if matice else []
         
  
