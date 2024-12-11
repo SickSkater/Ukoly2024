@@ -1,5 +1,5 @@
 
-from queue import None
+from queue import Empty
 import random
 
 
