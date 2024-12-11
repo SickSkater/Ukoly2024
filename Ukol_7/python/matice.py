@@ -1,5 +1,5 @@
 
-from queue import Empty
+from queue import None
 import random
 
 
@@ -26,7 +26,7 @@ def reprezentace_matice(matice: list[list[int]]) -> str:
 def soucet_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[list[int]]:
     """Sečte dvě matice, pokud mají stejné rozměry."""
 
-    if m != n or len(matice1) != len(matice2):
+    if len(matice1) != len(matice2) or not matice1[0] and len(matice1) < 0 or not matice2[0] and len(matice2)  < 0 or len(matice1[0]) != len(matice2[0]):
         return None
     
     m = len(matice1[0])
