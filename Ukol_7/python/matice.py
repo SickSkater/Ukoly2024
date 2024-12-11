@@ -37,9 +37,9 @@ def soucet_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[lis
 
 def nasobeni_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[list[int]]:
     """Vynásobí dvě matice, pokud je násobení proveditelné."""
-    if len(matice1[0]) == 0 and len(matice2[0]) == 0:
+    if not matice1 and not matice2: # nahrazeni checku delky na indexu z duvodu segmentační chyby za kontrolu listu
         return []
-    if len(matice1[0]) != len(matice2): # check na velikost sloupce první mat a řádků druhé mat
+    if not matice1 or not matice2 or len(matice1[0]) != len(matice2): # check na velikost sloupce první mat a řádků druhé mat, přidán check pro existenci listu
         return None
     matice: list[list[int]] = []
     # for loopy pro lepší přehlednost -> přetvořeno na zkrácený syntax 
@@ -55,7 +55,7 @@ def nasobeni_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[l
 def transpozice_matice(matice: list[list[int]]) -> list[list[int]]:
     """Provede transpozici matice."""
     matice: list[list[int]] = []
-    if len(matice) == 0:
+    if not matice or not matice[0] # check pro existenci matice, check na existenci řádků
         return [[]] if matice else []
         
  
