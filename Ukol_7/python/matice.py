@@ -25,11 +25,12 @@ def reprezentace_matice(matice: list[list[int]]) -> str:
 
 def soucet_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[list[int]]:
     """Sečte dvě matice, pokud mají stejné rozměry."""
-    m = len(matice1[0])
-    n = len(matice2[0])
+
     if m != n or len(matice1) != len(matice2):
         return None
     
+    m = len(matice1[0])
+    n = len(matice2[0])
     matice: list[list[int]] = []
     matice = [[matice1[row][col] + matice2[row][col] for col in range(m)] for row in range(len(matice1))] # sečtení na totožných indexech pokud projde checkem za pomocí zkráceného syntaxu
     return matice
@@ -54,13 +55,13 @@ def nasobeni_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[l
 
 def transpozice_matice(matice: list[list[int]]) -> list[list[int]]:
     """Provede transpozici matice."""
-    matice: list[list[int]] = []
+    
     if not matice or not matice[0]: # check pro existenci matice, check na existenci řádků
         return [[]] if matice else []
         
- 
-    matice = [[matice[col][row] for col in range(len(matice))] for row in range(len(matice[0]))] # prohození řádků se sloupci
-    return matice
+    maticeRem: list[list[int]] = []
+    maticeRem = [[matice[col][row] for col in range(len(matice))] for row in range(len(matice[0]))] # prohození řádků se sloupci
+    return maticeRem
 
 
 if __name__ == "__main__":
