@@ -30,7 +30,7 @@ def soucet_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[lis
         return None
     
     matice: list[list[int]] = []
-    matice = [[matice1[row][col] + matice2[row][col] for col in range(len(matice1[0])] for row in range(len(matice1))] # sečtení na totožných indexech pokud projde checkem za pomocí zkráceného syntaxu
+    matice = [[matice1[row][col] + matice2[row][col] for col in range(len(matice1[0]))] for row in range(len(matice1))] # sečtení na totožných indexech pokud projde checkem za pomocí zkráceného syntaxu
     return matice
 
 
