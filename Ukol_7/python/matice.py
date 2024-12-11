@@ -26,7 +26,7 @@ def reprezentace_matice(matice: list[list[int]]) -> str:
 def soucet_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[list[int]]:
     """Sečte dvě matice, pokud mají stejné rozměry."""
 
-    if len(matice1) != len(matice2) or not matice1[0] and not matice2[0]:
+    if len(matice1) != len(matice2) or any(len(row1) != len(row2) for row1, row2 in zip(matice1, matice2)):        
         return None
     
     m = len(matice1[0])
