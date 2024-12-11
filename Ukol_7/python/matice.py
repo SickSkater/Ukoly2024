@@ -29,10 +29,8 @@ def soucet_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[lis
     if len(matice1) != len(matice2) or any(len(row1) != len(row2) for row1, row2 in zip(matice1, matice2)):        
         return None
     
-    m = len(matice1[0])
-    n = len(matice2[0])
     matice: list[list[int]] = []
-    matice = [[matice1[row][col] + matice2[row][col] for col in range(m)] for row in range(len(matice1))] # sečtení na totožných indexech pokud projde checkem za pomocí zkráceného syntaxu
+    matice = [[matice1[row][col] + matice2[row][col] for col in range(len(matice1[0])] for row in range(len(matice1))] # sečtení na totožných indexech pokud projde checkem za pomocí zkráceného syntaxu
     return matice
 
 
