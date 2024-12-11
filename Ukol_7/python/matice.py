@@ -28,6 +28,7 @@ def soucet_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[lis
     m = len(matice1[0])
     n = len(matice2[0])
     if m != n or len(matice1) != len(matice2):
+        return;
         raise ValueError ("Matrix size does not match!")
     
     matice: list[list[int]] = []
@@ -38,6 +39,7 @@ def soucet_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[lis
 def nasobeni_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[list[int]]:
     """Vynásobí dvě matice, pokud je násobení proveditelné."""
     if len(matice1[0]) != len(matice2): # check na velikost sloupce první mat a řádků druhé mat
+        return;
         raise ValueError("Matrix1 columns must equal matrix2 rows")
     matice: list[list[int]] = []
     # for loopy pro lepší přehlednost -> přetvořeno na zkrácený syntax 
@@ -54,6 +56,7 @@ def transpozice_matice(matice: list[list[int]]) -> list[list[int]]:
     """Provede transpozici matice."""
     matice: list[list[int]] = []
     if len(matice) == 0:
+        return;
         raise ValueError("Matrix can not be empty") # odrbávka chyby 
     matice = [[matice[col][row] for col in range(len(matice))] for row in range(len(matice[0]))] # prohození řádků se sloupci
     return matice
