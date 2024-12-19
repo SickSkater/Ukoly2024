@@ -11,10 +11,10 @@ class Matice:
         self.m = m
         
         if data is None: # rand matice pokud není předáno parametrem
-            self.data = [[random.randint(0, 9) for col in range(m)] for row in range(n)]        
+            self.data = [[random.randint(0, 9) for col in range(m)] for row in range(n)]
         else :
             self.data = data
-    
+     
 
 
     def __str__(self) -> str:
@@ -51,6 +51,9 @@ class Matice:
         result = [[self.data[col][row] for col in range(self.n)] for row in range(self.m)]
         return Matice(self.m, self.n, result)
 
+    def __eq__(self, other):
+        """Porovná dvě matice."""
+        return self.data == other.data
 
 if __name__ == "__main__":
     # Vytvořte instance třídy Matice a otestujte metody
