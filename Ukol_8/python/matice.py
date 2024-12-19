@@ -11,7 +11,7 @@ class Matice:
         self.m = m
         
         if data is None: # rand matice pokud není předáno parametrem
-            self.data = [[random.randint(0, 9) for col in range(m)] for row in range(n)]        pass
+            self.data = [[random.randint(0, 9) for col in range(m)] for row in range(n)]        
         else :
             self.data = data
     
