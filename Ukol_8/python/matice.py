@@ -1,3 +1,4 @@
+
 from __future__ import annotations
 from typing import Union
 import random
@@ -6,25 +7,49 @@ import random
 class Matice:
     def __init__(self, n: int, m: int, data: list[list[int]] = None):
         """Inicializuje matici n x m."""
-        pass
+        self.n = n
+        self.m = m
+        
+        if data is None: # rand matice pokud není předáno parametrem
+            self.data = [[random.randint(0, 9) for col in range(m)] for row in range(n)]        pass
+        else :
+            self.data = data
+    
+
 
     def __str__(self) -> str:
         """Vrátí stringovou reprezentaci matice."""
-        pass
+        return '\n'.join(' '.join(map(str, row)) for row in self.data)
+
 
     def __add__(self, other: Matice) -> Matice:
         """Sečte aktuální matici s maticí other."""
-        # Implementace součtu matic
-        pass
+        if self.n != other.n or self.m != other.m:
+            raise ValueError("Matrix size does not match! ")
+        else:
+            result = [[self.data[row][col] + other.data[row][col] for col in range(self.m)] for row in range(self.n)]
+            return Matice(self.n, self.m, result)
+
 
     def __mul__(self, other: Union[Matice, int]) -> Matice:
         """Vynásobí aktuální matici maticí nebo skalárem."""
-        # Implementace násobení matic
-        pass
+        if type(other) is int:
+            result = [[self.data[row][col] * other for col in range(self.m)] for row in range(self.n)]
+            return Matice(self.n, self.m, result)
+        elif type(other) is Matice:
+            if self.m != other.n:
+                raise ValueError("Nelze provést násobení matic.")
+            else:
+                result = [[sum(self.data[row][k] * other.data[k][col] for k in range(self.m)) for col in range(other.m)] for row in range(self.n)]
+                return Matice(self.n, other.m, result)
+        else:
+            raise ValueError("Wrong matrix multiplier type! ")
+        
 
     def transpozice(self) -> Matice:
         """Vrátí transponovanou matici."""
-        # Implementace transpozice matice
+        result = [[self.data[col][row] for col in range(self.n)] for row in range(self.m)]
+        return Matice(self.m, self.n, result)
 
 
 if __name__ == "__main__":
