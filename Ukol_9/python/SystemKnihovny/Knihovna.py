@@ -45,10 +45,10 @@ class Knihovna:
             name = fstr[0].split(':')[1].strip()
             Knihovna = cls(name)
             for row in reader:
-                if row.fieldnames == "kniha": 
-                    Knihovna.pridej_knihu(Kniha(row[1], row[2], int(row[3]), row[4]))
-                elif row.fieldnames == "ctenar":
-                    Knihovna.registruj_ctenare(Ctenar(row[5], row[6]))
+                if row.get('typ') == "kniha": 
+                    Knihovna.pridej_knihu(Kniha(row.get('nazev'), row.get('autor'), int(row.get('rok_vydani')), row.get('isbn')))
+                elif row.get('typ') == "ctenar":
+                    Knihovna.registruj_ctenare(Ctenar(row.get('jmeno'), row.get('prijmeni')))
         return Knihovna
 
     def pridej_knihu(self, kniha: Kniha):
