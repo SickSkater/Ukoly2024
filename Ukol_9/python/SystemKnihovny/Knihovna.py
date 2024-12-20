@@ -40,7 +40,8 @@ class Knihovna:
 
         with open(soubor, mode = 'r') as file:
             reader = csv.DictReader(file)
-            fstr = next(reader)
+            namefixReader = csv.Reader(file)
+            fstr = next(namefixReader)
             name = fstr[0].split(':')[1].strip()
             Knihovna = cls(name)
             for row in reader:
