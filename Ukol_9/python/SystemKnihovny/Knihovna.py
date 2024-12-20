@@ -14,16 +14,16 @@ class Knihovna:
 
     def kniha_existuje(funkce):
         """
-        Dekorátor kontrolující existenci knihy v knihovně.
+        #Dekorátor kontrolující existenci knihy v knihovně.
 
         Args:
             funkce: Funkce, která má být volána po kontrole existence knihy.
         """
 
         def wrapper(self, isbn: str, *args, **kwargs):
-            """
-            Wrapper funkce kontrolující existenci knihy před voláním dané funkce.
-            """
+        #Wrapper funkce kontrolující existenci knihy před voláním dané funkce.
+            if not any(kniha.isbn == isbn for kniha in self.knihy):
+                raise ValueError("Book with ISBN: " + isbn + " not found! ")
             return funkce(self, isbn, *args, **kwargs)
         return wrapper
 
@@ -37,7 +37,18 @@ class Knihovna:
         Returns:
             Objekt Knihovna načtený ze souboru.
         """
-        return Knihovna("Neznámá knihovna")
+
+        with open(soubor, mode = 'r') as file:
+            reader = csv.DictReader(file)
+            fstr = next(reader)
+            name = fstr[0].split(':')[1].strip()
+            Knihovna = cls(name)
+            for row in reader:
+                if row.fieldnames == "kniha": 
+                    Knihovna.pridej_knihu(Kniha(row[1], row[2], int(row[3]), row[4]))
+                elif row.fieldnames == "ctenar":
+                    Knihovna.registruj_ctenare(Ctenar(row[5], row[6]))
+        return Knihovna
 
     def pridej_knihu(self, kniha: Kniha):
         """
@@ -46,6 +57,7 @@ class Knihovna:
         Args:
             kniha: Objekt knihy, který má být přidán.
         """
+        self.knihy.append(Kniha)
         pass
 
     @kniha_existuje
@@ -58,7 +70,11 @@ class Knihovna:
         Raises:
             ValueError: Pokud kniha s daným ISBN neexistuje.
         """
-        pass
+        for book in self.knihy :
+            if book.isbn == isbn :
+                self.knihy.remove(book)
+                pass
+        raise ValueError("Book with ISBN: " + isbn + " not found! ")
 
     def vyhledej_knihu(self, klicova_slovo: str = "", isbn: str = ""):
         """
@@ -70,7 +86,9 @@ class Knihovna:
         Returns:
             Seznam nalezených knih.
         """
-        return []
+        if isbn:
+            return [book for book in self.knihy if book.isbn == isbn]
+        return [book for book in self.knihy if klicova_slovo.lower() in book.nazev.lower() or klicova_slovo.lower() in book.autor.lower()]
 
     def registruj_ctenare(self, ctenar: Ctenar):
         """
@@ -79,7 +97,7 @@ class Knihovna:
         Args:
             ctenar: Objekt čtenáře, který má být zaregistrován.
         """
-        pass
+        self.ctenari.append(Ctenar)
 
     def zrus_registraci_ctenare(self, ctenar: Ctenar):
         """
@@ -88,7 +106,8 @@ class Knihovna:
         Args:
             ctenar: Objekt čtenáře, jehož registrace má být zrušena.
         """
-        pass
+        self.ctenari.remove(Ctenar)
+        
 
     def vyhledej_ctenare(self, klicova_slovo: str = "", cislo_prukazky: int = None):
         """
@@ -100,7 +119,9 @@ class Knihovna:
         Returns:
             Seznam nalezených čtenářů.
         """
-        return []
+        if cislo_prukazky is not None:
+            return [registeredUser for registeredUser in self.ctenari if registeredUser.cislo_prukazky == cislo_prukazky]
+        return [registeredUser for registeredUser in self.ctenari if klicova_slovo.lower() in registeredUser.jmeno.lower() or klicova_slovo.lower() in registeredUser.prijmeni.lower()]
 
     @kniha_existuje
     def vypujc_knihu(self, isbn: str, ctenar: Ctenar):
@@ -113,7 +134,15 @@ class Knihovna:
         Raises:
             ValueError: Pokud kniha s daným ISBN neexistuje nebo je již vypůjčena.
         """
-        pass
+        #isbn raise value error už existuje v dekorátoru 
+        if isbn in self.vypujcene_knihy:
+            raise ValueError("Book is not available! ")
+        self.vypujcene_knihy[isbn] = (ctenar, datetime.date.today())
+        
+
+
+
+
 
     @kniha_existuje
     def vrat_knihu(self, isbn: str, ctenar: Ctenar):
@@ -126,7 +155,11 @@ class Knihovna:
         Raises:
             ValueError: Pokud kniha s daným ISBN není vypůjčena tímto čtenářem.
         """
-        pass
+        if isbn not in self.vypujcene_knihy or self.vypujcene_knihy[isbn][0] != ctenar: # check pro isbn / majitele vypujcene knihy
+            raise ValueError("Book with ISBN: " + isbn + " is not lent by you!")
+        del self.vypujcene_knihy[isbn] # vymazání checkeru
 
     def __str__(self) -> str:
-        return ""
+        books = ", ".join(book.nazev for book in self.knihy) # str knih
+        registeredUsers =  ", ".join(f"{regUser.jmeno} {regUser.prijmeni}" for regUser in self.ctenari) # str ctenaru
+        return f"Knihovna {self.nazev}\nKnihy: {books}\nČtenáři: {registeredUsers}"
